@@ -3,7 +3,7 @@
     "id": 1,
     "filename": "1.jpg",
     "title": "Nuit Blanche",
-    "description": "tongtong in whole black",
+    "description": "tongtong in the whole black",
     "category": "Portrait"
   },
   {
@@ -25,20 +25,6 @@
     "filename": "5.jpg",
     "title": "Fire",
     "description": "See you next time",
-    "category": "Landscape"
-  },
-  {
-    "id": 5,
-    "filename": "4.jpg",
-    "title": "Weather",
-    "description": "Hints",
-    "category": "B|W"
-  },
-  {
-    "id": 6,
-    "filename": "3.jpg",
-    "title": "Autume",
-    "description": "Friends",
     "category": "Landscape"
   }
 ]
