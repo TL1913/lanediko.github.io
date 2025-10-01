@@ -12,5 +12,26 @@
     "title": "Proofing",
     "description": "errors never end",
     "category": "Portrait"
+  },
+  {
+    "id": 3,
+    "filename": "6.jpg",
+    "title": "Sister",
+    "description": "Harmony",
+    "category": "Portrait"
+  },
+  {
+    "id": 4,
+    "filename": "5.jpg",
+    "title": "Fire",
+    "description": "See you next time",
+    "category": "Landscape"
+  },
+  {
+    "id": 5,
+    "filename": "4.jpg",
+    "title": "Weather",
+    "description": "Hints",
+    "category": "B|W"
   }
 ]
