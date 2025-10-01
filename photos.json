@@ -33,5 +33,12 @@
     "title": "Weather",
     "description": "Hints",
     "category": "B|W"
+  },
+  {
+    "id": 6,
+    "filename": "3.jpg",
+    "title": "Autume",
+    "description": "Friends",
+    "category": "Landscape"
   }
 ]
