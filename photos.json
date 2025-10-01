@@ -26,5 +26,19 @@
     "title": "Fire",
     "description": "See you next time",
     "category": "Landscape"
+  },
+  {
+    "id": 5,
+    "filename": "4.jpg",
+    "title": "Weather",
+    "description": "Hints",
+    "category": "B|W"
+  },
+  {
+    "id": 6,
+    "filename": "3.jpg",
+    "title": "Autumn",
+    "description": "Friends",
+    "category": "Landscape"
   }
 ]
