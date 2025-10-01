@@ -1,1 +1,16 @@
-
+[
+  {
+    "id": 1,
+    "filename": "1.jpg",
+    "title": "Mountain Sunrise",
+    "description": "Captured at 4000m altitude, witnessing a magnificent sunrise over the peaks",
+    "category": "Landscape"
+  },
+  {
+    "id": 2,
+    "filename": "2.jpg",
+    "title": "Forest Path",
+    "description": "Morning sunlight filtering through ancient trees",
+    "category": "Landscape"
+  }
+]
