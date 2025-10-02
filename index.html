@@ -337,7 +337,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Modal */
+        /* Modal with Zoom */
         .modal {
             display: none;
             position: fixed;
@@ -346,7 +346,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.97);
             align-items: center;
             justify-content: center;
         }
@@ -355,19 +355,79 @@
             display: flex;
         }
 
+        .modal-image-container {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .modal-image-container.dragging {
+            cursor: grabbing;
+        }
+
         .modal-content {
-            max-width: 90%;
-            max-height: 90vh;
+            max-width: none;
+            max-height: none;
             object-fit: contain;
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+
+        .zoom-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 25px;
+            border-radius: 30px;
+            z-index: 2002;
+        }
+
+        .zoom-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .zoom-level {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            letter-spacing: 1px;
         }
 
         .modal-info {
             position: absolute;
-            bottom: 60px;
+            top: 100px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
             max-width: 700px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
         }
 
         .modal-info h3 {
@@ -390,6 +450,7 @@
             font-size: 40px;
             cursor: pointer;
             transition: opacity 0.3s;
+            z-index: 2003;
         }
 
         .close-modal:hover {
@@ -406,6 +467,7 @@
             padding: 30px;
             transition: opacity 0.3s;
             user-select: none;
+            z-index: 2003;
         }
 
         .modal-nav:hover {
@@ -424,17 +486,23 @@
         }
 
         footer p {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9em;
+            color: #777;
+            font-size: 0.85em;
             letter-spacing: 1px;
-            line-height: 1.8;
-            margin-bottom: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        footer strong {
+            letter-spacing: 2px;
+            color: #999;
         }
 
         footer a {
-            color: rgba(255, 255, 255, 0.7);
+            color: #777;
             text-decoration: none;
             transition: color 0.3s;
+            margin: 0 12px;
         }
 
         footer a:hover {
@@ -499,6 +567,17 @@
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
+
+            .zoom-controls {
+                bottom: 20px;
+                padding: 12px 20px;
+            }
+
+            .zoom-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -522,7 +601,7 @@
         <div class="scroll-hint">Scroll to explore</div>
     </section>
 
-    <!-- Featured Photos (Full Screen) -->
+    <!-- Featured Photos -->
     <div id="featuredPhotos"></div>
 
     <!-- Gallery Section -->
@@ -547,25 +626,36 @@
 
     <!-- Footer -->
     <footer>
-        <p style="margin-bottom: 20px; color: #777; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <p style="margin-bottom: 20px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">
             Photographer based in Kyoto, Japan<br>
-            <strong style="letter-spacing: 2px; color: #999;">L</strong>ight <strong style="letter-spacing: 2px; color: #999;">A</strong>nd <strong style="letter-spacing: 2px; color: #999;">N</strong>arrative <strong style="letter-spacing: 2px; color: #999;">E</strong>xpression<br>   
-            <strong style="letter-spacing: 2px; color: #999;">D</strong>iscover <strong style="letter-spacing: 2px; color: #999;">I</strong>nspire <strong style="letter-spacing: 2px; color: #999;">K</strong>indle <strong style="letter-spacing: 2px; color: #999;">O</strong>pportunities
+            <strong>L</strong>ight <strong>A</strong>nd <strong>N</strong>arrative <strong>E</strong>xpression<br>   
+            <strong>D</strong>iscover <strong>I</strong>nspire <strong>K</strong>indle <strong>O</strong>pportunities
         </p>
         <p style="margin-top: 15px; margin-bottom: 15px;">
-            <a href="https://instagram.com/lane_diko" target="_blank" style="color: #777; margin: 0 12px; text-decoration: none;">Instagram</a>
-            <span style="color: #777; margin: 0 12px;">·</span>
-            <span style="color: #777; margin: 0 12px; cursor: text;">silentlane@gmail.com</span>
+            <a href="https://instagram.com/lane_diko" target="_blank">Instagram</a>
+            <span style="color: #777;">·</span>
+            <span style="cursor: text;">silentlane@gmail.com</span>
         </p>
         <p style="margin-top: 20px;">© 2025 Lane DIKO</p>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal with Zoom -->
     <div class="modal" id="modal">
         <span class="close-modal" onclick="closeModal()">×</span>
         <span class="modal-nav modal-prev" onclick="previousPhoto()">‹</span>
         <span class="modal-nav modal-next" onclick="nextPhoto()">›</span>
-        <img class="modal-content" id="modalImg">
+        
+        <div class="modal-image-container" id="imageContainer">
+            <img class="modal-content" id="modalImg">
+        </div>
+        
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomOut()">−</button>
+            <span class="zoom-level" id="zoomLevel">100%</span>
+            <button class="zoom-btn" onclick="zoomIn()">+</button>
+            <button class="zoom-btn" onclick="resetZoom()">⟲</button>
+        </div>
+        
         <div class="modal-info" id="modalInfo"></div>
     </div>
 
@@ -577,6 +667,13 @@
         let photos = [];
         let currentPhotoIndex = 0;
         let currentFilter = 'all';
+        
+        // Zoom variables
+        let scale = 1;
+        let posX = 0;
+        let posY = 0;
+        let isDragging = false;
+        let startX, startY;
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
@@ -603,7 +700,7 @@
             }
         }
 
-        // Load and display photos
+        // Load photos
         async function loadPhotos() {
             try {
                 const response = await fetch(`${BASE_URL}/photos.json`);
@@ -631,10 +728,10 @@
             }
         }
 
-        // Create full-screen featured sections
+        // Featured sections
         function createFeaturedSections() {
             const container = document.getElementById('featuredPhotos');
-            const featured = photos.slice(0, 3); // Show first 3 photos as featured
+            const featured = photos.slice(0, 3);
             
             featured.forEach(photo => {
                 const section = document.createElement('section');
@@ -652,7 +749,7 @@
             });
         }
 
-        // Intersection Observer for scroll animations
+        // Scroll observer
         function setupScrollObserver() {
             const sections = document.querySelectorAll('.photo-section');
             
@@ -669,7 +766,7 @@
             sections.forEach(section => observer.observe(section));
         }
 
-        // Render gallery grid
+        // Render gallery
         function renderGallery() {
             const photoGrid = document.getElementById('photoGrid');
             const filteredPhotos = currentFilter === 'all' 
@@ -687,7 +784,7 @@
             `).join('');
         }
 
-        // Filter functionality
+        // Filter
         document.querySelectorAll('.filter-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
@@ -701,6 +798,7 @@
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modalImg');
         const modalInfo = document.getElementById('modalInfo');
+        const imageContainer = document.getElementById('imageContainer');
 
         function openModal(index) {
             currentPhotoIndex = index;
@@ -712,11 +810,13 @@
                 <p>${photo.description}</p>
             `;
             document.body.style.overflow = 'hidden';
+            resetZoom();
         }
 
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
+            resetZoom();
         }
 
         function previousPhoto() {
@@ -724,6 +824,7 @@
             const photo = photos[currentPhotoIndex];
             modalImg.src = photo.src;
             modalInfo.innerHTML = `<h3>${photo.title}</h3><p>${photo.description}</p>`;
+            resetZoom();
         }
 
         function nextPhoto() {
@@ -731,7 +832,85 @@
             const photo = photos[currentPhotoIndex];
             modalImg.src = photo.src;
             modalInfo.innerHTML = `<h3>${photo.title}</h3><p>${photo.description}</p>`;
+            resetZoom();
         }
+
+        // Zoom functions
+        function updateTransform() {
+            modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            document.getElementById('zoomLevel').textContent = Math.round(scale * 100) + '%';
+        }
+
+        function zoomIn() {
+            scale = Math.min(scale + 0.25, 3);
+            updateTransform();
+        }
+
+        function zoomOut() {
+            scale = Math.max(scale - 0.25, 0.5);
+            if (scale === 1) {
+                posX = 0;
+                posY = 0;
+            }
+            updateTransform();
+        }
+
+        function resetZoom() {
+            scale = 1;
+            posX = 0;
+            posY = 0;
+            updateTransform();
+        }
+
+        // Mouse wheel zoom
+        imageContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            scale = Math.max(0.5, Math.min(3, scale + delta));
+            if (scale === 1) {
+                posX = 0;
+                posY = 0;
+            }
+            updateTransform();
+        });
+
+        // Double click to zoom
+        modalImg.addEventListener('dblclick', () => {
+            if (scale === 1) {
+                scale = 2;
+            } else {
+                resetZoom();
+            }
+            updateTransform();
+        });
+
+        // Drag to pan
+        imageContainer.addEventListener('mousedown', (e) => {
+            if (scale > 1) {
+                isDragging = true;
+                startX = e.clientX - posX;
+                startY = e.clientY - posY;
+                imageContainer.classList.add('dragging');
+            }
+        });
+
+        imageContainer.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                updateTransform();
+            }
+        });
+
+        imageContainer.addEventListener('mouseup', () => {
+            isDragging = false;
+            imageContainer.classList.remove('dragging');
+        });
+
+        imageContainer.addEventListener('mouseleave', () => {
+            isDragging = false;
+            imageContainer.classList.remove('dragging');
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
@@ -739,6 +918,9 @@
             if (e.key === 'ArrowLeft') previousPhoto();
             if (e.key === 'ArrowRight') nextPhoto();
             if (e.key === 'Escape') closeModal();
+            if (e.key === '+' || e.key === '=') zoomIn();
+            if (e.key === '-' || e.key === '_') zoomOut();
+            if (e.key === '0') resetZoom();
         });
 
         modal.addEventListener('click', (e) => {
@@ -751,4 +933,3 @@
     </script>
 </body>
 </html>
-
