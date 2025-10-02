@@ -377,26 +377,26 @@
 
         .zoom-controls {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 40px;
+            right: 120px;
             display: flex;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px 25px;
-            border-radius: 30px;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 12px;
+            border-radius: 20px;
             z-index: 2002;
+            backdrop-filter: blur(10px);
         }
 
         .zoom-btn {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
-            width: 40px;
-            height: 40px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 14px;
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -410,13 +410,14 @@
 
         .zoom-level {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9em;
+            font-size: 0.75em;
             display: flex;
             align-items: center;
-            padding: 0 10px;
-            letter-spacing: 1px;
+            padding: 0 6px;
+            letter-spacing: 0.5px;
+            min-width: 45px;
+            justify-content: center;
         }
-
         .modal-info {
             position: absolute;
             top: 100px;
@@ -933,4 +934,5 @@
     </script>
 </body>
 </html>
+
 
