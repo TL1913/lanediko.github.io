@@ -357,8 +357,11 @@
 
         .modal-image-container {
             position: relative;
-            width: 90%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             cursor: grab;
         }
@@ -368,8 +371,10 @@
         }
 
         .modal-content {
-            max-width: none;
-            max-height: none;
+            max-width: 85vw;
+            max-height: 75vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
             transition: transform 0.3s ease;
             user-select: none;
@@ -418,29 +423,33 @@
             min-width: 45px;
             justify-content: center;
         }
+
         .modal-info {
-            position: absolute;
-            top: 100px;
+            position: fixed;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            max-width: 700px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px 30px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 18px 35px;
+            border-radius: 8px;
+            backdrop-filter: blur(15px);
+            z-index: 2004;
         }
 
         .modal-info h3 {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 300;
             letter-spacing: 2px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .modal-info p {
-            font-size: 0.95em;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
         }
 
         .close-modal {
@@ -570,14 +579,35 @@
             }
 
             .zoom-controls {
-                bottom: 20px;
-                padding: 12px 20px;
+                top: 20px;
+                right: 60px;
+                padding: 6px 10px;
             }
 
             .zoom-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
+
+            .zoom-level {
+                font-size: 0.7em;
+                padding: 0 4px;
+                min-width: 40px;
+            }
+
+            .modal-info {
+                bottom: 20px;
+                padding: 15px 20px;
+                width: 95%;
+            }
+
+            .modal-info h3 {
+                font-size: 1.1em;
+            }
+
+            .modal-info p {
+                font-size: 0.85em;
             }
         }
     </style>
@@ -637,7 +667,7 @@
             <span style="color: #777; margin: 0 12px;">·</span>
             <span style="color: #777; margin: 0 12px; cursor: text;">silentlane@gmail.com</span>
         </p>
-        <p style="margin-top: 20px;">© 2025 Lane DIKO</p>
+        <p style="margin-top: 20px; font-family: 'Courier New', Courier, monospace; font-size: 0.8em; letter-spacing: 1.5px;">© 2025 Lane DIKO</p>
     </footer>
 
     <!-- Modal with Zoom -->
@@ -843,7 +873,7 @@
         }
 
         function zoomIn() {
-            scale = Math.min(scale + 0.25, 3);
+            scale = Math.min(scale + 0.25, 4);
             updateTransform();
         }
 
@@ -867,7 +897,7 @@
         imageContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            scale = Math.max(0.5, Math.min(3, scale + delta));
+            scale = Math.max(0.5, Math.min(4, scale + delta));
             if (scale === 1) {
                 posX = 0;
                 posY = 0;
@@ -887,7 +917,7 @@
 
         // Drag to pan
         imageContainer.addEventListener('mousedown', (e) => {
-            if (scale > 1) {
+            if (scale > 1 && e.target === modalImg) {
                 isDragging = true;
                 startX = e.clientX - posX;
                 startY = e.clientY - posY;
@@ -934,5 +964,3 @@
     </script>
 </body>
 </html>
-
-
