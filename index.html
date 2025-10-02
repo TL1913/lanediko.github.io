@@ -115,6 +115,12 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease forwards 0.3s;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .hero-content h1:hover {
+            opacity: 0.7;
         }
 
         .hero-content p {
@@ -487,6 +493,76 @@
         .modal-prev { left: 30px; }
         .modal-next { right: 30px; }
 
+        /* About Modal */
+        .about-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-modal.active {
+            display: flex;
+        }
+
+        .about-content {
+            max-width: 800px;
+            width: 90%;
+            padding: 60px 50px;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .about-content h2 {
+            font-size: 2.5em;
+            font-weight: 200;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .about-content .subtitle {
+            font-size: 0.9em;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            margin-top: 35px;
+        }
+
+        .close-about {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 35px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .close-about:hover {
+            opacity: 0.7;
+        }
+
         /* Footer */
         footer {
             padding: 100px 50px;
@@ -609,6 +685,26 @@
             .modal-info p {
                 font-size: 0.85em;
             }
+
+            .about-content {
+                padding: 40px 30px;
+                width: 95%;
+            }
+
+            .about-content h2 {
+                font-size: 1.8em;
+                letter-spacing: 4px;
+            }
+
+            .about-content p {
+                font-size: 1em;
+            }
+
+            .close-about {
+                top: 20px;
+                right: 25px;
+                font-size: 30px;
+            }
         }
     </style>
 </head>
@@ -617,6 +713,7 @@
     <nav id="navbar">
         <div class="logo">LANE DIKO</div>
         <div class="nav-menu">
+            <a href="#" onclick="openAbout(); return false;">About</a>
             <a href="#gallery">Gallery</a>
             <a href="mailto:silentlane@gmail.com">Contact</a>
         </div>
@@ -626,8 +723,8 @@
     <section class="hero-section">
         <div class="hero-bg" id="heroBg"></div>
         <div class="hero-content">
-            <h1>LANE DIKO</h1>
-            <p>Photographer based in Kyoto, Japan</p>
+            <h1 onclick="openAbout()">LANE DIKO</h1>
+            <p>Kyoto, Japan</p>
         </div>
         <div class="scroll-hint">Scroll to explore</div>
     </section>
@@ -656,7 +753,7 @@
     </section>
 
     <!-- Footer -->
-  <footer>
+    <footer>
         <p style="margin-bottom: 20px; color: #777; line-height: 1.6; max-width: 500px; font-family: Georgia, 'Times New Roman', serif; margin-left: auto; margin-right: auto;">
             Photographer based in Kyoto, Japan<br>
             <strong style="letter-spacing: 2px; color: #999;">L</strong>ight <strong style="letter-spacing: 2px; color: #999;">A</strong>nd <strong style="letter-spacing: 2px; color: #999;">N</strong>arrative <strong style="letter-spacing: 2px; color: #999;">E</strong>xpression<br>   
@@ -693,6 +790,25 @@
         </p>
         <p style="margin-top: 20px; font-family: Georgia, 'Times New Roman', serif; font-size: 0.8em; letter-spacing: 1.5px;">© 2025 Lane DIKO</p>
     </footer>
+
+    <!-- About Modal -->
+    <div class="about-modal" id="aboutModal">
+        <div class="about-content">
+            <span class="close-about" onclick="closeAbout()">×</span>
+            <h2>LANE DIKO</h2>
+            
+            <p>Lane Diko is a photographer based in Kyoto, Japan, specializing in capturing the essence of light, emotion, and narrative through the lens.</p>
+            
+            <div class="subtitle">Philosophy</div>
+            <p>Photography is more than just freezing a moment in time—it's about telling a story, evoking emotions, and revealing the unseen beauty in everyday life. Through careful composition and an eye for detail, Lane seeks to create images that resonate deeply with viewers.</p>
+            
+            <div class="subtitle">Approach</div>
+            <p>Working primarily with natural light and authentic moments, Lane's photography style blends contemporary aesthetics with timeless storytelling. Each project is approached with dedication to craft and a commitment to capturing genuine human experiences.</p>
+            
+            <div class="subtitle">Contact</div>
+            <p>For collaborations, commissions, or inquiries, please reach out via email at <a href="mailto:silentlane@gmail.com" style="color: #fff; text-decoration: underline;">silentlane@gmail.com</a> or connect on <a href="https://instagram.com/lane_diko" target="_blank" style="color: #fff; text-decoration: underline;">Instagram</a>.</p>
+        </div>
+    </div>
 
     <!-- Modal with Zoom -->
     <div class="modal" id="modal">
@@ -854,6 +970,17 @@
         const modalImg = document.getElementById('modalImg');
         const modalInfo = document.getElementById('modalInfo');
         const imageContainer = document.getElementById('imageContainer');
+        const aboutModal = document.getElementById('aboutModal');
+
+        function openAbout() {
+            aboutModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAbout() {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
         function openModal(index) {
             currentPhotoIndex = index;
@@ -969,6 +1096,10 @@
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
+            if (aboutModal.classList.contains('active') && e.key === 'Escape') {
+                closeAbout();
+                return;
+            }
             if (!modal.classList.contains('active')) return;
             if (e.key === 'ArrowLeft') previousPhoto();
             if (e.key === 'ArrowRight') nextPhoto();
@@ -982,16 +1113,13 @@
             if (e.target === modal) closeModal();
         });
 
+        aboutModal.addEventListener('click', (e) => {
+            if (e.target === aboutModal) closeAbout();
+        });
+
         // Initialize
         loadHeroBackground();
         loadPhotos();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
